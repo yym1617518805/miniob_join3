@@ -171,9 +171,7 @@ void Value::set_date(int val)
   int day=val%100;
 
 
-  if(year<=1969 || year>=2039){
-    flag=false;
-  }
+
 
   if(month==0 || month>12){
     flag=false;
@@ -230,8 +228,8 @@ if(flag){
 }
 else{
     attr_type_ = UNDEFINED;
-    num_value_.date_value_ = val;
-    length_ = sizeof(0);
+    num_value_.date_value_ = val;val
+    length_ = sizeof(val);
 }
 
 }
