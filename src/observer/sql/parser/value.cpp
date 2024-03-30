@@ -435,9 +435,6 @@ int Value::get_date()const{
     case DATES:{
         return  num_value_.date_value_;
     }break;
-    case UNDEFINED:{
-      return 0;
-    }break;
     default:{
       LOG_WARN("unknown data type. type=%d", attr_type_);
       return 0;
