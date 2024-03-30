@@ -19,6 +19,57 @@ See the Mulan PSL v2 for more details. */
 #include "storage/db/db.h"
 #include "storage/table/table.h"
 
+bool judge(int val){
+  bool flag=true;
+  int year=val/10000;
+  int month=(val-year*10000)/100;
+  int day=val%100;
+
+  if(month==0 || month>12){
+    flag=false;
+  }
+
+  if((year%4==0 && year%100!=0) || (year%400==0)){  //run_nian
+    if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+      if(day==0 || day>31){
+        flag=false;
+      }
+    }
+    else if(month==4||month==6||month==9||month==11){
+      if(day==0 || day>30){
+        flag=false;
+      }
+    }
+    else{ 
+      if(day==0 || day>29){
+        flag=false;
+      }
+    }
+  }
+
+
+  else {  //not_run_nian
+    if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+      if(day==0||day>31){
+        flag=false;
+      }
+    }
+    else if(month==4||month==6||month==9||month==11){
+      if(day==0||day>30){
+        flag=false;
+      }
+    }
+    else{
+      if(day==0||day>28){
+        flag=false;
+      }
+    }
+  }
+  return flag;
+}
+
+
+
 FilterStmt::~FilterStmt()
 {
   for (FilterUnit *unit : filter_units_) {
@@ -125,6 +176,15 @@ RC FilterStmt::create_filter_unit(Db *db, Table *default_table, std::unordered_m
   }
 
   filter_unit->set_comp(comp);
+  
+  Value curvalue=condition.right_value;
+  if(curvalue.attr_type()==DATES ||curvalue.attr_type()==UNDEFINED){
+    int cur=curvalue.get_date();
+    bool curbool=judge(cur);
+    if( !curbool) {
+        return RC::INVALID_ARGUMENT;
+    }
+  }
 
   // 检查两个类型是否能够比较
   return rc;
