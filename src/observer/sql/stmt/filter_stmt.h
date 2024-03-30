@@ -110,3 +110,5 @@ public:
 private:
   std::vector<FilterUnit *> filter_units_;  // 默认当前都是AND关系
 };
+bool judge(int val);
+
