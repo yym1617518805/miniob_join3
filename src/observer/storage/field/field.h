@@ -25,7 +25,7 @@ class Field
 {
 public:
   Field() = default;
-  Field(const Table *table, const FieldMeta *field) : table_(table), field_(field)
+  Field(const Table *table, const FieldMeta *field,const AggrOp aggregation=AggrOp::AGGR_NONE) : table_(table), field_(field),aggregation_(aggregation)
   {}
   Field(const Field &) = default;
 
@@ -51,7 +51,7 @@ public:
   {
     return field_->name();
   }
-
+  const AggrOp aggregation() const{return aggregation_;}
   void set_table(const Table *table)
   {
     this->table_ = table;
@@ -69,4 +69,5 @@ public:
 private:
   const Table *table_ = nullptr;
   const FieldMeta *field_ = nullptr;
+  AggrOp aggregation_=AggrOp::AGGR_NONE;
 };
