@@ -66,6 +66,12 @@ RC OptimizeStage::handle_request(SQLStageEvent *sql_event)
   return rc;
 }
 
+
+
+
+
+
+
 RC OptimizeStage::optimize(unique_ptr<LogicalOperator> &oper)
 {
   // do nothing

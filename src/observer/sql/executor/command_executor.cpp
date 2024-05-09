@@ -55,7 +55,7 @@ RC CommandExecutor::execute(SQLStageEvent *sql_event)
       ShowTablesExecutor executor;
       return executor.execute(sql_event);
     }
-
+    
     case StmtType::BEGIN: {
       TrxBeginExecutor executor;
       return executor.execute(sql_event);

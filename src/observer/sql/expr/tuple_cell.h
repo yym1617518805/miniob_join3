@@ -42,6 +42,6 @@ private:
   std::string table_name_;
   std::string field_name_;
   std::string alias_;
-  AggrOp aggr_;
+  AggrOp aggr_=AggrOp::AGGR_NONE;
 };
 void aggr_to_string(std::string &a,AggrOp cur);
