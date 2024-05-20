@@ -154,6 +154,12 @@ struct UpdateSqlNode
   std::vector<ConditionSqlNode> conditions;
 };
 
+struct JoinSqlNode
+{
+  std::vector<std::string> relations;
+  std::vector<ConditionSqlNode>   conditions;
+};
+
 /**
  * @brief 描述一个属性
  * @ingroup SQLParser
@@ -320,6 +326,7 @@ public:
   LoadDataSqlNode           load_data;
   ExplainSqlNode            explain;
   SetVariableSqlNode        set_variable;
+  JoinSqlNode               join_list;
 
 public:
   ParsedSqlNode();

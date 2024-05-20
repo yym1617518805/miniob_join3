@@ -116,6 +116,8 @@ INT                                     RETURN_TOKEN(INT_T);
 CHAR                                    RETURN_TOKEN(STRING_T);
 FLOAT                                   RETURN_TOKEN(FLOAT_T);
 LOAD                                    RETURN_TOKEN(LOAD);
+INNER                                   RETURN_TOKEN(INNER);
+JOIN                                    RETURN_TOKEN(JOIN);
 DATA                                    RETURN_TOKEN(DATA);
 DATE                                    RETURN_TOKEN(DATE_T);
 INFILE                                  RETURN_TOKEN(INFILE);
