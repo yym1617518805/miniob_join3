@@ -178,7 +178,9 @@ RC FilterStmt::create_filter_unit(Db *db, Table *default_table, std::unordered_m
   filter_unit->set_comp(comp);
   
   Value curvalue=condition.right_value;
-  if(curvalue.attr_type()==DATES ||curvalue.attr_type()==UNDEFINED){
+  AttrType cur=condition.right_value.attr_type();
+
+  if(curvalue.attr_type()==DATES){
     int cur=curvalue.get_date();
     bool curbool=judge(cur);
     if( !curbool) {
