@@ -363,7 +363,7 @@ int Value::compare(const Value &other) const
     return common::compare_str_with_float((void *)this->str_value_.c_str(), this->str_value_.length(),(void *)&other.num_value_.float_value_);
   } else if (this->attr_type_ == FLOATS && other.attr_type_ == CHARS) {
     float this_data = this->num_value_.int_value_;
-    return common::compare_str_with_int((void *)other.str_value_.c_str(), other.str_value_.length(),(void *)&this->num_value_.float_value_);
+    return common::compare_str_with_float((void *)other.str_value_.c_str(), other.str_value_.length(),(void *)&this->num_value_.float_value_);
   }
   LOG_WARN("not supported");
   return -1;  // TODO return rc?
