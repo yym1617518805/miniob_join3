@@ -15,7 +15,57 @@ See the Mulan PSL v2 for more details. */
 #include "sql/stmt/insert_stmt.h"
 #include "common/log/log.h"
 #include "storage/db/db.h"
+bool judge2(int val){
+  bool flag=true;
+  int year=val/10000;
+  int month=(val-year*10000)/100;
+  int day=val%100;
+
+  if(month==0 || month>12){
+    flag=false;
+  }
+
+  if((year%4==0 && year%100!=0) || (year%400==0)){  //run_nian
+    if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+      if(day==0 || day>31){
+        flag=false;
+      }
+    }
+    else if(month==4||month==6||month==9||month==11){
+      if(day==0 || day>30){
+        flag=false;
+      }
+    }
+    else{ 
+      if(day==0 || day>29){
+        flag=false;
+      }
+    }
+  }
+
+
+  else {  //not_run_nian
+    if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+      if(day==0||day>31){
+        flag=false;
+      }
+    }
+    else if(month==4||month==6||month==9||month==11){
+      if(day==0||day>30){
+        flag=false;
+      }
+    }
+    else{
+      if(day==0||day>28){
+        flag=false;
+      }
+    }
+  }
+  return flag;
+}
 #include "storage/table/table.h"
+
+
 
 InsertStmt::InsertStmt(Table *table, const Value *values, int value_amount)
     : table_(table), values_(values), value_amount_(value_amount)
@@ -53,6 +103,14 @@ RC InsertStmt::create(Db *db, const InsertSqlNode &inserts, Stmt *&stmt)
     const FieldMeta *field_meta = table_meta.field(i + sys_field_num);
     const AttrType field_type = field_meta->type();
     const AttrType value_type = values[i].attr_type();
+
+    if(values[i].attr_type()==AttrType::DATES){
+        int cur=values[i].get_date();
+        if(!judge2(cur)){
+          return RC::SCHEMA_FIELD_TYPE_MISMATCH;
+        }
+
+    }
     if (field_type != value_type) {  // TODO try to convert the value type to field type
       LOG_WARN("field type mismatch. table=%s, field=%s, field type=%d, value_type=%d",
           table_name, field_meta->name(), field_type, value_type);
@@ -64,3 +122,5 @@ RC InsertStmt::create(Db *db, const InsertSqlNode &inserts, Stmt *&stmt)
   stmt = new InsertStmt(table, values, value_num);
   return RC::SUCCESS;
 }
+
+
