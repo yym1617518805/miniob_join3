@@ -65,7 +65,7 @@ int compare_string(void *arg1, int arg1_max_length, void *arg2, int arg2_max_len
   return 0;
 }
 
-int compare_str_with_int(void *arg1,int arg_max_length,void *arg2){
+int compare_str_with_int(void *arg1,int arg_max_length,void *arg2,int s){
   const char *s1 = (const char *)arg1;
   int v2 = *(int *)arg2;
   int maxlen = arg_max_length;
@@ -96,10 +96,13 @@ int compare_str_with_int(void *arg1,int arg_max_length,void *arg2){
   if(needle='-'){
     v3=-v3;
   }
+  if(s==0)
   return v3-v2;
+  else
+  return v2-v3;
 }
 
-int compare_str_with_float(void *arg1,int agr1_max_length,void *agr2){
+int compare_str_with_float(void *arg1,int agr1_max_length,void *agr2,int s){
   const char *s1 = (const char *)arg1 ;
   float needle1=0.1;
   float v2 = *(float *)agr2;
@@ -145,7 +148,12 @@ int compare_str_with_float(void *arg1,int agr1_max_length,void *agr2){
   if(needle='-'){
     v3=-v3;
   }
-  float cmp = v3 - v2;
+  float cmp=0; 
+  if(s==0)
+  cmp = v3 - v2;
+  else 
+  cmp=v2-v3;
+
   if (cmp > EPSILON) {
     return 1;
   }
