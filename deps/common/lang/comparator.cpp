@@ -98,7 +98,7 @@ int compare_str_with_int(void *arg1,int arg_max_length,void *arg2,int s){
   }
   if(s==0)
   return v3-v2;
-  else
+  else 
   return v2-v3;
 }
 
@@ -145,14 +145,15 @@ int compare_str_with_float(void *arg1,int agr1_max_length,void *agr2,int s){
       break;
     }
   }
-  if(needle='-'){
+  if(needle=='-'){
     v3=-v3;
   }
   float cmp=0; 
   if(s==0)
   cmp = v3 - v2;
-  else 
-  cmp=v2-v3;
+  else{
+    cmp=v2-v3;
+  }
 
   if (cmp > EPSILON) {
     return 1;
